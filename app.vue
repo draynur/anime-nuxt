@@ -1,48 +1,34 @@
 <script setup>
 import S51Logo from "~/assets/S51-logo.svg";
-const { $animate, $svg, $stagger } = useNuxtApp();
-let isAnimating = false;
-let animation = false;
-
-const animate = () => {
-  if (animation) {
-    if (isAnimating) {
-      animation.play();
-    } else {
-      animation.pause();
-    }
-    isAnimating = !isAnimating;
-  }
-};
+const { $animate, $svg, $stagger, $createTimeline } = useNuxtApp();
 
 onMounted(() => {
-  animation = $animate($svg.createDrawable(".s51 path"), {
-    draw: ["0 0", "0 1", "1 1"],
+  const animation = $animate($svg.createDrawable(".s51 path"), {
+    draw: ["0 0", "0 1"],
     ease: "inOutQuad",
     duration: 8000,
-    delay: $stagger(500),
-    loop: true,
-    autoplay: false,
+    delay: $stagger(1000),
+    loop: false,
+  });
+
+  const fillAnimation = $animate(".s51 path", {
+    fillOpacity: [0, 1],
+    delay: 8000,
+    duration: 1000,
+    ease: "inOutQuad",
+    loop: false,
+    autoplay: true,
   });
 });
 </script>
 <template>
   <div class="container">
-    <UButton
-      icon="i-lucide-rocket"
-      size="md"
-      color="primary"
-      variant="solid"
-      @click="animate"
-      >{{ isAnimating ? "Pause" : "Play" }}</UButton
-    >
     <S51Logo class="s51 text-4xl" :fontControlled="false" />
   </div>
 </template>
 <style>
 .s51 {
-  height: 400px;
-  width: auto;
+  height: 80%;
 }
 .container {
   height: 100vh;
@@ -56,8 +42,9 @@ onMounted(() => {
 
 .s51,
 .s51 * {
-  fill: none !important;
+  fill: #ee3124 !important;
+  fill-opacity: 0;
   stroke: #ee3124;
-  stroke-width: 10px;
+  stroke-width: 1px;
 }
 </style>
