@@ -1,10 +1,21 @@
+<template>
+  <body class="grid">
+    <div class="container hidden" ref="logo">
+      <S51Logo class="s51 text-4xl" :fontControlled="false" />
+    </div>
+  </body>
+</template>
+
 <script setup>
 import S51Logo from "~/assets/S51-logo.svg";
 const { $animate, $svg, $stagger } = useNuxtApp();
 
 const logoVisible = false;
+const logo = useTemplateRef("logo");
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick();
+
   $animate($svg.createDrawable(".s51 path"), {
     draw: ["0 0", "0 1"],
     ease: "inOutQuad",
@@ -12,6 +23,8 @@ onMounted(() => {
     delay: $stagger(1000),
     loop: false,
   });
+
+  logo.value.classList.remove("hidden");
 
   $animate(".s51 path", {
     fillOpacity: [0, 1],
@@ -23,11 +36,7 @@ onMounted(() => {
   });
 });
 </script>
-<template>
-  <div class="container">
-    <S51Logo class="s51 text-4xl" :fontControlled="false" />
-  </div>
-</template>
+
 <style>
 .hidden {
   opacity: 0;
