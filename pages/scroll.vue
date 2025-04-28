@@ -1,10 +1,8 @@
 <template>
   <body class="grid" ref="body">
     <section class="sticky-container">
-      <div class="sticky-content">
-        <div class="logo-container hidden" ref="logo">
-          <S51Logo class="s51 text-4xl" :fontControlled="false" />
-        </div>
+      <div class="logo-container hidden" ref="logo">
+        <S51Logo class="s51 text-4xl" :fontControlled="false" />
       </div>
     </section>
   </body>
@@ -12,8 +10,7 @@
 
 <script setup>
 import S51Logo from "~/assets/S51-logo.svg";
-const { $animate, $createTimeline, $stagger, $onScroll, $svg } = useNuxtApp();
-
+const { $createTimeline, $stagger, $onScroll, $svg } = useNuxtApp();
 const logo = useTemplateRef("logo");
 
 onMounted(() => {
@@ -55,7 +52,7 @@ onMounted(() => {
   height: 400lvh;
 }
 
-.sticky-content {
+.logo-container {
   perspective: 1000px;
   perspective-origin: 50%;
   transform-style: preserve-3d;
