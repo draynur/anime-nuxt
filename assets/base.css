@@ -1,79 +1,82 @@
 :root {
-  --black: #252423;
-  --white: #f6f4f2;
-  --red: #ff4b4b;
-  --orange: #ff8f42;
+  --black      : #252423;
+  --white      : #f6f4f2;
+  --red        : #ff4b4b;
+  --orange     : #ff8f42;
   --lightorange: #ffc730;
-  --yellow: #f6ff56;
-  --citrus: #a4ff4f;
-  --green: #18ff74;
-  --darkgreen: #00d672;
-  --turquoise: #3cffec;
-  --skyblue: #61c3ff;
-  --kingblue: #5a87ff;
-  --lavender: #8453e3;
-  --purple: #c26eff;
-  --pink: #fb89fb;
+  --yellow     : #f6ff56;
+  --citrus     : #a4ff4f;
+  --green      : #18ff74;
+  --darkgreen  : #00d672;
+  --turquoise  : #3cffec;
+  --skyblue    : #61c3ff;
+  --kingblue   : #5a87ff;
+  --lavender   : #8453e3;
+  --purple     : #c26eff;
+  --pink       : #fb89fb;
 }
 
 *,
 *:before,
 *:after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  vertical-align: baseline;
+  /* box-sizing    : border-box;
+  margin        : 0;
+  padding       : 0;
+  border        : 0;
+  font          : inherit;
+  vertical-align: baseline; */
 }
 
 html,
 body {
   background-color: var(--black);
-  color: var(--white);
-  font-family: sans-serif;
+  color           : var(--white);
+  font-family     : sans-serif;
+  min-height      : 100vh;
 }
 
 .black {
   color: var(--black);
 }
+
 .white {
   color: var(--white);
 }
+
 .red {
   color: var(--red);
 }
+
 .blue {
   color: var(--skyblue);
 }
+
 .green {
   color: var(--green);
 }
 
-.grid {
-  --one-cell: 100px;
+.background-grid {
+  --one-cell    : 100px;
   --border-color: rgba(255, 255, 255, 0.75);
-  flex-grow: 1;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 0;
+  flex-grow     : 1;
+  position      : relative;
+  width         : 100%;
+  min-height    : 100vh;
+  padding       : 0;
 }
 
-.grid:before {
-  content: "";
+.background-grid:before {
+  content       : "";
   pointer-events: none;
-  position: absolute;
-  z-index: 0;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-      -90deg,
+  position      : absolute;
+  z-index       : 0;
+  left          : 0;
+  top           : 0;
+  width         : 100%;
+  height        : 100%;
+  background    : linear-gradient(-90deg,
       rgba(255, 255, 255, 0.05) 1px,
-      transparent 1px
-    ),
+      transparent 1px),
     linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(-90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
@@ -88,41 +91,44 @@ body {
   backface-visibility: hidden;
 }
 
-.grid:before {
+.background-grid:before {
   width: calc(75px + 100%);
-  left: -75px;
+  left : -75px;
 }
 
 @media (min-width: 500px) {
-  .grid:before {
+  .background-grid:before {
     width: 100%;
-    left: 0;
+    left : 0;
   }
 }
 
 .log {
-  --width: 22ch;
-  --height: 20ch;
-  position: fixed;
-  z-index: 10;
-  top: 0;
-  overflow-y: scroll;
-  width: var(--width);
-  height: var(--height);
-  padding-left: 1ch;
-  padding-right: 1ch;
-  padding-bottom: 1ch;
-  font-family: ui-monospace, monospace;
-  white-space: pre;
+  --width         : 22ch;
+  --height        : 20ch;
+  position        : fixed;
+  z-index         : 10;
+  top             : 0;
+  overflow-y      : scroll;
+  width           : var(--width);
+  height          : var(--height);
+  padding-left    : 1ch;
+  padding-right   : 1ch;
+  padding-bottom  : 1ch;
+  font-family     : ui-monospace, monospace;
+  white-space     : pre;
   background-color: rgba(0, 0, 0, 0.5);
 }
+
 .log span {
   animation: reveal 2s ease-in-out forwards;
 }
+
 @keyframes reveal {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0.4;
   }
@@ -130,10 +136,11 @@ body {
 
 .s51,
 .s51 * {
-  fill: #ee3124 !important;
+  fill        : #ee3124 !important;
   fill-opacity: 0;
-  stroke: #ee3124;
+  stroke      : #ee3124;
   stroke-width: 10px;
-  width: 600px;
-  height: auto;
+  width       : 600px;
+  height      : auto;
+  transition: 300ms fill-opacity;
 }

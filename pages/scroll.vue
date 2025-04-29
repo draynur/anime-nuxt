@@ -1,22 +1,23 @@
 <template>
-  <body class="grid" ref="body">
-    <section class="sticky-container">
-      <div class="logo-container hidden" ref="logo">
-        <S51Logo class="s51 text-4xl" :fontControlled="false" />
-      </div>
-    </section>
-  </body>
+  <section class="sticky-container">
+    <div class="logo-container hidden" ref="logo">
+      <S51Logo class="s51 text-4xl" :fontControlled="false" />
+    </div>
+  </section>
 </template>
 
 <script setup>
-import S51Logo from "~/assets/S51-logo.svg";
-const { $createTimeline, $stagger, $onScroll, $svg } = useNuxtApp();
+import S51Logo from "~/assets/S51-Logo.svg";
+const { $createTimeline, $stagger, $onScroll, $svg, $waapi } = useNuxtApp();
 const logo = useTemplateRef("logo");
+let tl = null;
 
 onMounted(() => {
   logo.value.classList.remove("hidden");
+  // const { left, right, top, bottom, x, y, width, height } = logo.value.getBoundingClientRect();
+  const drawableLogo = $svg.createDrawable(".s51 path");
 
-  $createTimeline({
+  tl = $createTimeline({
     defaults: {
       ease: "linear",
       duration: 500,
@@ -26,11 +27,21 @@ onMounted(() => {
       target: ".sticky-container",
       enter: "top top",
       leave: "bottom bottom",
+      onEnter: () => {
+        logo.value.classList.remove("filled");
+      },
+      onLeave: () => {
+        logo.value.classList.add("filled");
+        // if at top of the screen, remove the filled class
+        if (logo.value.getBoundingClientRect().top < 10) {
+          logo.value.classList.remove("filled");
+        }
+      },
       sync: 0.5,
     }),
   })
     .add(
-      $svg.createDrawable(".s51 path"),
+      drawableLogo,
       {
         draw: ["0 0", "0 1"],
         ease: "inOutQuad",
@@ -39,6 +50,30 @@ onMounted(() => {
         loop: false,
       },
       0,
+    )
+    .add(
+      logo.value,
+      {
+        duration: 4000,
+        fillOpacity: [0, 1],
+        ease: "elastic",
+        loop: false,
+        x: 500,
+        y: -420,
+        scale: .1,
+      },
+    )
+    .add(
+      logo.value.querySelector(".s51"),
+      {
+        duration: 4000,
+        fill: "#ee3124",
+        ease: "elastic",
+        loop: false,
+        onComplete: () => {
+          logo.value.classList.add("filled");
+        },
+      },
     )
     .init();
 
@@ -89,5 +124,10 @@ section.spacer {
 
 .hidden {
   opacity: 0;
+}
+
+.filled .s51 *,
+.filled .s51 {
+  fill-opacity: 1;
 }
 </style>
