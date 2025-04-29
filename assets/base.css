@@ -143,4 +143,5 @@ body {
   width       : 600px;
   height      : auto;
   transition: 300ms fill-opacity;
+  transform-origin: center;
 }
