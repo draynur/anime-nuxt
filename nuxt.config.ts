@@ -12,8 +12,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     'nuxt-svgo'
   ],
-  baseURL: '/anime-nuxt/',
   nitro: {
     preset: 'static'
-  }
+  },
 })
