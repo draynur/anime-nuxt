@@ -1,7 +1,35 @@
 <template>
   <div class="container">
-    <UButton active color="neutral" variant="outline" active-color="primary" active-variant="solid" class="p-2" to="/loading">Loading</UButton>
-    <UButton active color="neutral" variant="outline" active-color="primary" active-variant="solid" class="p-2" to="/scroll">Scrolling</UButton>
+    <UButton
+      active
+      color="neutral"
+      variant="outline"
+      active-color="primary"
+      active-variant="solid"
+      class="p-2 text-center block"
+      to="/loading"
+      >Loading</UButton
+    >
+    <UButton
+      active
+      color="neutral"
+      variant="outline"
+      active-color="primary"
+      active-variant="solid"
+      class="p-2 text-center block"
+      to="/scroll"
+      >Scrolling</UButton
+    >
+    <UButton
+      active
+      color="neutral"
+      variant="outline"
+      active-color="primary"
+      active-variant="solid"
+      class="p-2 text-center block"
+      to="/matrix"
+      >Matrix</UButton
+    >
   </div>
 </template>
 
@@ -14,3 +42,4 @@
   height: 100vh;
 }
 </style>
+

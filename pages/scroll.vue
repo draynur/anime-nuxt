@@ -13,34 +13,27 @@ const logo = useTemplateRef("logo");
 let tl = null;
 
 onMounted(() => {
-  const el = logo.value;
-  el.classList.remove("hidden");
-  // const { left, right, top, bottom, x, y, width, height } = logo.value.getBoundingClientRect();
-  // 1. Get current bounding box + centre
+  logo.value.classList.remove("hidden");
+  const el = logo.value.querySelector("svg");
+  const drawableLogo = $svg.createDrawable(".s51 path");
+
+  // Get current bounding box + centers
   const { left, top, width, height } = el.getBoundingClientRect();
   const startCx = left + width / 2;
   const startCy = top + height / 2;
 
-  // 2. Define your final scale and margin
+  // Define your scale and margin
   const finalScale = 0.1;
-  const margin = 20; // px from top/right
+  const marginY = 20;
+  const marginX = 32;
 
-  // 3. Compute where the *centre* should end up (in viewport coords)
-  const endCx = window.innerWidth - (width * finalScale) / 2 - margin;
-  const endCy = (height * finalScale) / 2 + margin;
+  // Compute where the center should end up
+  const endCx = window.innerWidth - (width * finalScale) / 2 - marginX;
+  const endCy = (height * finalScale) / 2 + marginY;
 
-  // 4. Delta vector from start→end
-  const dx = endCx - startCx;
-  const dy = endCy - startCy;
-
-  // 5. Because anime does translate→scale, your x/y get multiplied by your scale.
-  //    To get a *visual* move of dx, you must supply dx / finalScale.
-  const translateX = dx / finalScale;
-  const translateY = dy / finalScale;
-
-  console.log({ translateY, translateX, finalScale, windowWidth: window.innerWidth });
-
-  const drawableLogo = $svg.createDrawable(".s51 path");
+  // Calculate distances of each vector
+  const translateX = endCx - startCx;
+  const translateY = endCy - startCy;
 
   tl = $createTimeline({
     defaults: {
@@ -140,4 +133,3 @@ section.spacer {
   fill-opacity: 1;
 }
 </style>
-

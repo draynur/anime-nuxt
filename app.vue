@@ -1,27 +1,34 @@
-<script setup lang="ts">
-
-// Setup showBackButton to watch $router.currentRoute
-const { useRouter } = await import('vue-router');
-
+<script setup>
+import { ref, watch } from "vue";
+import { useRouter } from "vue-router";
 const router = useRouter();
-const currentRoute = router.currentRoute.value;
-let showBackButton = ref(currentRoute.name !== 'index');
+const config = useRuntimeConfig();
+const home = config.app.baseURL;
+const showBackButton = ref(router.currentRoute.value.name !== "index");
 
-// Watch for route changes
-router.afterEach((to, from) => {
-  showBackButton.value = to.name !== 'index' && from.name !== null;
-  console.log('Current route:', to.name);
-  console.log('Previous route:', from.name);
-  console.log('Show back button:', showBackButton);
-});
-
+watch(
+  () => router.currentRoute.value.name,
+  (newRouteName) => {
+    showBackButton.value = newRouteName !== "index";
+  },
+  { immediate: true },
+);
 </script>
 <template>
   <UApp>
     <div class="background-grid">
       <header v-if="showBackButton">
-        <UButton as="link" active color="neutral" variant="outline"
-          active-color="primary" active-variant="solid" class="p-2" @click="$router.back()">Back</UButton>
+        <UButton
+          as="link"
+          active
+          color="neutral"
+          variant="outline"
+          active-color="primary"
+          active-variant="solid"
+          class="p-2"
+          :to="home"
+          >Back</UButton
+        >
       </header>
       <NuxtPage />
     </div>
