@@ -1,18 +1,15 @@
 <script setup>
-import { ref, watch } from "vue";
-import { useRouter } from "vue-router";
-const router = useRouter();
-const config = useRuntimeConfig();
-const home = config.app.baseURL;
-const showBackButton = ref(router.currentRoute.value.name !== "index");
+// Setup showBackButton to watch $router.currentRoute
+const { useRouter } = await import("vue-router");
 
-watch(
-  () => router.currentRoute.value.name,
-  (newRouteName) => {
-    showBackButton.value = newRouteName !== "index";
-  },
-  { immediate: true },
-);
+const router = useRouter();
+const currentRoute = router.currentRoute.value;
+let showBackButton = ref(currentRoute.name !== "index");
+
+// Watch for route changes
+router.afterEach((to, from) => {
+  showBackButton.value = to.name !== "index" && from.name !== null;
+});
 </script>
 <template>
   <UApp>
@@ -26,7 +23,7 @@ watch(
           active-color="primary"
           active-variant="solid"
           class="p-2"
-          :to="home"
+          @click="$router.back()"
           >Back</UButton
         >
       </header>
@@ -43,3 +40,4 @@ header {
   z-index: 10000;
 }
 </style>
+
