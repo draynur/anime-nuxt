@@ -15,27 +15,19 @@
 <script setup>
 import S51Logo from "~/assets/S51-Logo.svg";
 const { $utils, $createTimeline, $stagger } = useNuxtApp();
-const logo = useTemplateRef("logo");
-const staggerContainer = useTemplateRef("stagger-container");
-const cursor = useTemplateRef("cursor");
-const rows = 4;
+const rows = 20;
 const grid = [rows, rows];
 const numberOfElements = rows * rows;
 var animation;
 
 onMounted(async () => {
-  let index = $utils.random(0, numberOfElements);
+  let index = 0;
   let nextIndex = 0;
-
-  $utils.set(".cursor", {
-    x: $stagger("-1rem", { grid, from: index, axis: "x" }),
-    y: $stagger("-1rem", { grid, from: index, axis: "y" }),
-  });
 
   function animateGrid() {
     if (animation) animation.pause();
-
     nextIndex = $utils.random(0, numberOfElements);
+    const duration = $utils.random(1000, 3000);
 
     animation = $createTimeline({
       defaults: {
@@ -44,21 +36,43 @@ onMounted(async () => {
       onComplete: animateGrid,
     })
       .add(
-        ".cursor",
+        ".dot",
         {
-          translateX: {
-            from: $stagger("-5.5rem", { grid, from: index, axis: "x" }),
-            to: $stagger("-5.5rem", { grid, from: nextIndex, axis: "x" }),
-            duration: 2000,
-          },
-          translateY: {
-            from: $stagger("-5.5rem", { grid, from: index, axis: "y" }),
-            to: $stagger("-5.5rem", { grid, from: nextIndex, axis: "y" }),
-            duration: 2000,
-          },
-          delay: $utils.random(100, 1000)
+          keyframes: [
+            {
+              scale: 1.2,
+              duration: 500,
+            },
+            {
+              x: 0,
+              y: 0,
+              scale: 0.8,
+              duration: 400,
+            },
+            {
+              x: 0,
+              y: 0,
+              scale: 1,
+              duration: duration - 900,
+            },
+          ],
+          delay: $stagger(50, { grid, from: index }),
         },
-      );
+        0,
+      )
+      .add(".cursor", {
+        translateX: {
+          from: $stagger("-3rem", { grid, from: index, axis: "x" }),
+          to: $stagger("-3rem", { grid, from: nextIndex, axis: "x" }),
+          duration: duration,
+        },
+        translateY: {
+          from: $stagger("-3rem", { grid, from: index, axis: "y" }),
+          to: $stagger("-3rem", { grid, from: nextIndex, axis: "y" }),
+          duration: duration,
+        },
+        // delay: duration,
+      });
 
     index = nextIndex;
   }
@@ -85,21 +99,21 @@ onBeforeUnmount(() => {
 }
 
 .stagger-visualizer {
-  --rows: 4;
+  --rows: 20;
   position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  width: calc(var(--rows) * 5.5rem);
-  height: calc(var(--rows) * 5.5rem);
+  width: calc(var(--rows) * 3rem);
+  height: calc(var(--rows) * 3rem);
 }
 
 .stagger-visualizer .dot {
   position: relative;
-  width: 4.5rem;
-  height: 4.5rem;
-  margin: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0.25rem;
 }
 
 .stagger-visualizer .dot path {
@@ -112,12 +126,12 @@ onBeforeUnmount(() => {
   z-index: 1;
   top: 0;
   left: 0;
-  width: 4.5rem;
-  height: 4.5rem;
-  margin: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0.25rem;
 }
 
-.stagger-visualizer .cursor path{
+.stagger-visualizer .cursor path {
   fill-opacity: 1;
   fill: white !important;
   stroke: white;

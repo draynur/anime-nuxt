@@ -73,6 +73,7 @@ onMounted(() => {
         duration: 4000,
         ease: "inOutQuad",
         fillOpacity: 1,
+        rotateY: [0, 360],
         loop: false,
       },
       "-=4000",
