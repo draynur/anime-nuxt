@@ -15,28 +15,19 @@ onMounted(async () => {
   const tl = $createTimeline({
     defaults: {
       ease: "inOutQuad",
-      loop: false
+      loop: false,
     },
-  })
+  });
 
   tl.add($svg.createDrawable(".s51 path"), {
-    draw: ["0 0", "0 1"],
+    draw: ["0 0", "0 1", "1 1"],
     ease: "inOutQuad",
-    duration: 6000,
-    delay: $stagger(1000),
-    loop: false,
+    duration: 12000,
+    // delay: $stagger(1000),
+    loop: true,
   });
 
   logo.value.classList.remove("hidden");
-
-  tl.add(".s51 path", {
-    fillOpacity: [0, 1],
-    duration: 3000,
-    ease: "inOutQuad",
-    loop: false,
-    autoplay: true,
-  }, '-=4000')
-
 });
 </script>
 
@@ -54,5 +45,4 @@ onMounted(async () => {
   gap: 1rem;
   height: 100vh;
 }
-
 </style>
